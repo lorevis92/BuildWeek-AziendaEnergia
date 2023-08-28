@@ -21,9 +21,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class Cliente {
+
 	@Id
 	@GeneratedValue
-	private UUID Id;
+	private UUID id_cliente;
 	private String ragioneSociale;
 	private String partitaIva;
 	private String email;
@@ -35,10 +36,14 @@ public class Cliente {
 	private String emailContatto;
 	private String nomeContatto;
 	private String cognomeContatto;
-	private int telefonoContatto;
+	private String telefonoContatto;
 	@Enumerated(EnumType.STRING)
 	private Tipo tipo;
 	@OneToMany(mappedBy = "cliente")
 	private List<Indirizzo> listaIndirizzi = new ArrayList<>();
 
+	public Cliente(String ragioneSociale, String partitaIva, String email, LocalDate dataInserimento,
+			LocalDate dataUltimoContatto, Double fatturatoAnnuale, String pec, int telefono, String emailContatto,
+			String nomeContatto, String cognomeContatto, String telefonoContatto, Tipo tipo) {
+	}
 }
