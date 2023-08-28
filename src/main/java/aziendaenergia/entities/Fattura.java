@@ -2,13 +2,14 @@ package aziendaenergia.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import aziendaenergia.Enum.Stato;
+import aziendaenergia.interfaces.AllertaFattura;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,10 @@ public class Fattura {
 	private BigDecimal importo;
 	private int  numero;
 	private Stato stato;
+	@ManyToOne
+	private Cliente cliente;
+	
+	private AllertaFattura clienteFinale;
 	
 	public Fattura(String intestazione, int anno, LocalDate data, BigDecimal importo, int numero, Stato stato) {
 		this.intestazione = intestazione;
@@ -37,5 +42,21 @@ public class Fattura {
 		this.stato = stato;
 	}
 	
+
 	
-}
+	public void inviaMessaggio (Fattura fattura) {
+		clienteFinale.messaggio(fattura);
+	}
+	
+	
+	
+	/*private List<AllertaFattura> clienteFinale = new ArrayList<>();
+	
+	public void inviaMessaggio(Fattura fattura) {
+		for(AllertaFattura c : clienteFinale) {
+			c.messaggio(fattura);
+			}*/
+		
+	}
+	
+	

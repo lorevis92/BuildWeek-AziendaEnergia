@@ -40,5 +40,9 @@ public class Cliente {
 	private Tipo tipo;
 	@OneToMany(mappedBy = "cliente")
 	private List<Indirizzo> listaIndirizzi = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente")
+	private List<Fattura> listaFatture = new ArrayList<>();
+	
+	
 
 }
