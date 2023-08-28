@@ -1,5 +1,6 @@
 package aziendaenergia.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,4 +77,10 @@ public class ClienteService {
 		clienteRepository.delete(found);
 	}
 
+	// FILTRA CLIENTI
+	public Page<Cliente> filtraClienti(Double minFatturatoAnnuale, LocalDate dataInserimento,
+			LocalDate dataUltimoContatto, String parteNome, Pageable pageable) {
+		return clienteRepository.filtraClienti(minFatturatoAnnuale, dataInserimento, dataUltimoContatto, parteNome,
+				pageable);
+	}
 }

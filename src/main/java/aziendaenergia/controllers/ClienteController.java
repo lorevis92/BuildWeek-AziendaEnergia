@@ -1,9 +1,11 @@
 package aziendaenergia.controllers;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +39,7 @@ public class ClienteController {
 	@GetMapping("")
 //	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getCliente(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "id") String sortBy) {
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return clienteService.find(page, size, sortBy);
 	}
 
@@ -61,4 +62,12 @@ public class ClienteController {
 		clienteService.findByIdAndDelete(id_cliente);
 	}
 
+	@GetMapping("/filtra")
+	public Page<Cliente> filtraClienti(@RequestParam(required = false) Double minFatturatoAnnuale,
+			@RequestParam(required = false) LocalDate dataInserimento,
+			@RequestParam(required = false) LocalDate dataUltimoContatto,
+			@RequestParam(required = false) String parteNome, Pageable pageable) {
+		return clienteService.filtraClienti(minFatturatoAnnuale, dataInserimento, dataUltimoContatto, parteNome,
+				pageable);
+	}
 }
