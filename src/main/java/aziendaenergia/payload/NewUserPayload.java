@@ -1,5 +1,6 @@
 package aziendaenergia.payload;
 
+import aziendaenergia.validation.StrongPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,7 @@ public class NewUserPayload {
 	@Email(message = "La password inserita non è valida")
 	private String email;
 	@NotNull(message = "La password è obbligatoria")
+	@StrongPassword(message = "La password non soddisfa i requisiti di sicurezza")
 	private String password;
 
 }
