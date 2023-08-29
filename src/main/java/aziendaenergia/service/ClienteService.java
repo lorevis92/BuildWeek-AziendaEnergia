@@ -51,7 +51,7 @@ public class ClienteService {
 		return clienteRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 	}
 
-	// CERCA E MODIFICA UTENTE TRAMITE ID
+	// CERCA E MODIFICA CLIENTE TRAMITE ID
 	public Cliente findByIdAndUpdate(UUID id, NewClientePayload body) throws NotFoundException {
 		Cliente found = this.findById(id);
 		found.setRagioneSociale(body.getRagioneSociale());
