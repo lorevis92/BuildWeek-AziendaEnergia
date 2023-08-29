@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import aziendaenergia.Enum.Stato;
-import aziendaenergia.interfaces.AllertaFattura;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
