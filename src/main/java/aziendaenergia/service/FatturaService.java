@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 import aziendaenergia.exceptions.NotFoundException;
 import aziendaenergia.payload.NewFatturaPayload;
@@ -71,4 +72,21 @@ public class FatturaService {
 	public Page<Fattura> filtraFatturaPerData(LocalDate data, Pageable pageable) {
 		return fatturaRepository.findByData(data, pageable);
 	}
-}
+	
+	 public void checkAndUpdateFatturaStates() {
+	        List<Fattura> emessaFatture = fatturaRepository.findByStatoAndData(Stato.EMESSA, LocalDate.now());
+
+	        for (Fattura fattura : emessaFatture) {
+	            LocalDate currentDate = LocalDate.now();
+	            LocalDate thirtyDaysAfterData = fattura.getData().plusDays(30);
+
+	            if (currentDate.isEqual(fattura.getData())) {
+	                fattura.inviaMessaggio(fattura); //invia il messaggio al cliente
+	            } else if (currentDate.isAfter(thirtyDaysAfterData)) {
+	                fattura.setStato(Stato.INSOLUTA); //cambia lo stato da pagare e poi le faccio inviare il messaggio al cliente
+	                fattura.inviaMessaggio(fattura);
+	            }
+	            fatturaRepository.save(fattura);
+	        }
+	    }
+	}

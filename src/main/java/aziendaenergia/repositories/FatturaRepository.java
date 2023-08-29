@@ -1,6 +1,7 @@
 package aziendaenergia.repositories;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 
 @Repository
@@ -19,4 +21,6 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 
 	@Query("SELECT c FROM Fattura c WHERE DATE(c.data) = DATE(:data)")
 	Page<Fattura> findByData(@Param("data") LocalDate data, Pageable pageable);
+	
+	List<Fattura> findByStatoAndData(Stato stato, LocalDate data);
 }
