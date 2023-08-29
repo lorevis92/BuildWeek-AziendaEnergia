@@ -10,5 +10,4 @@ public class BuildWeekAziendaEnergiaApplication {
 		SpringApplication.run(BuildWeekAziendaEnergiaApplication.class, args);
 
 	}
-
 }
