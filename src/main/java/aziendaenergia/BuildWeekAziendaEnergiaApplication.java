@@ -14,12 +14,7 @@ public class BuildWeekAziendaEnergiaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BuildWeekAziendaEnergiaApplication.class, args);
-		
-		Fattura f1 = new Fattura("Ciao", 2023, LocalDate.of(2023, 8, 28), new BigDecimal("300.25"), 45, Stato.INSOLUTA );
-		f1.inviaMessaggio(f1);
+
 	}
-	
-	
-	
 
 }

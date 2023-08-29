@@ -33,6 +33,8 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/clienti/**").permitAll());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/fatture/**").permitAll());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/indirizzi/**").permitAll());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
 
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

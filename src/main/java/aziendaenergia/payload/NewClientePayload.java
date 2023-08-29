@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class NewClientePayload {
+
 	private String ragioneSociale;
 	private String partitaIva;
 	private String email;

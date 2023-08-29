@@ -1,5 +1,6 @@
 package aziendaenergia.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +51,7 @@ public class ClienteService {
 		return clienteRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 	}
 
-	// CERCA E MODIFICA UTENTE TRAMITE ID
+	// CERCA E MODIFICA CLIENTE TRAMITE ID
 	public Cliente findByIdAndUpdate(UUID id, NewClientePayload body) throws NotFoundException {
 		Cliente found = this.findById(id);
 		found.setRagioneSociale(body.getRagioneSociale());
@@ -76,4 +77,19 @@ public class ClienteService {
 		clienteRepository.delete(found);
 	}
 
+	public Page<Cliente> filtraClientiPerFatturato(Double minFatturatoAnnuale, Pageable pageable) {
+		return clienteRepository.findByFatturatoAnnualeGreaterThanEqual(minFatturatoAnnuale, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerDataInserimento(LocalDate dataInserimento, Pageable pageable) {
+		return clienteRepository.findByDataInserimento(dataInserimento, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerDataUltimoContatto(LocalDate dataUltimoContatto, Pageable pageable) {
+		return clienteRepository.findByDataUltimoContatto(dataUltimoContatto, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerParteNome(String parteNome, Pageable pageable) {
+		return clienteRepository.findByNomeContattoContainingIgnoreCase(parteNome, pageable);
+	}
 }

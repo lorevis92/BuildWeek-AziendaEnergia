@@ -16,6 +16,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 public class Indirizzo {
+
 	@Id
 	@GeneratedValue
 	private UUID indirizzo_id;
@@ -29,4 +30,14 @@ public class Indirizzo {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+
+	public Indirizzo(String cap, int civico, String localita, String via, Cliente cliente, Comune comune) {
+
+		this.cap = cap;
+		this.civico = civico;
+		this.località = localita;
+		this.via = via;
+		this.cliente = cliente;
+		this.comune = comune;
+	}
 }

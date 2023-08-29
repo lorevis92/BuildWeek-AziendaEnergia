@@ -26,37 +26,24 @@ public class Fattura {
 	private int anno;
 	private LocalDate data;
 	private BigDecimal importo;
-	private int  numero;
+	private int numero;
 	private Stato stato;
 	@ManyToOne
 	private Cliente cliente;
-	
-	private AllertaFattura clienteFinale;
-	
-	public Fattura(String intestazione, int anno, LocalDate data, BigDecimal importo, int numero, Stato stato) {
+
+	public Fattura(String intestazione, int anno, LocalDate data, BigDecimal importo, int numero, Stato stato,
+			Cliente cliente) {
 		this.intestazione = intestazione;
 		this.anno = anno;
 		this.data = data;
 		this.importo = importo;
 		this.numero = numero;
 		this.stato = stato;
+		this.cliente = cliente;
 	}
-	
 
-	
-	public void inviaMessaggio (Fattura fattura) {
-		clienteFinale.messaggio(fattura);
-	}
-	
-	
-	
-	/*private List<AllertaFattura> clienteFinale = new ArrayList<>();
-	
 	public void inviaMessaggio(Fattura fattura) {
-		for(AllertaFattura c : clienteFinale) {
-			c.messaggio(fattura);
-			}*/
-		
+
 	}
-	
-	
+
+}
