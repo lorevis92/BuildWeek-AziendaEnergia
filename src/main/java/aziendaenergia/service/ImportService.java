@@ -3,7 +3,6 @@ package aziendaenergia.service;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVParser;
@@ -24,15 +23,14 @@ public class ImportService {
 		this.provinceRepository = provinceRepository;
 	}
 
-	public void importDataFromCSV() {
+	public void importDataFromCSV(String filePath) {
 		try {
-			ClassPathResource provinceResource = new ClassPathResource("province-italiane.csv");
+			FileReader filereader = new FileReader(filePath);
 
 			CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
-			CSVReader provinceReader = new CSVReaderBuilder(new FileReader(provinceResource.getFile()))
-					.withCSVParser(parser).build();
+			CSVReader provinceReader = new CSVReaderBuilder(filereader).withCSVParser(parser).build();
 
-			provinceReader.skip(1);
+			provinceReader.skip(1); // Skip header row
 
 			String[] provinceLine;
 			while ((provinceLine = provinceReader.readNext()) != null) {

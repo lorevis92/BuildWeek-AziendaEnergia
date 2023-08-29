@@ -1,5 +1,6 @@
 package aziendaenergia.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class FatturaService {
 	// SALVA NUOVA FATTURA
 	public Fattura save(NewFatturaPayload body) {
 		Fattura newFattura = new Fattura(body.getIntestazione(), body.getAnno(), body.getData(), body.getImporto(),
-				body.getNumero(), body.getStato());
+				body.getNumero(), body.getStato(), body.getCliente());
 		return fatturaRepository.save(newFattura);
 	}
 
@@ -63,4 +64,11 @@ public class FatturaService {
 		fatturaRepository.delete(found);
 	}
 
+	public Page<Fattura> filtraFatturaPerCliente(UUID id, Pageable pageable) {
+		return fatturaRepository.findByClienteId(id, pageable);
+	}
+
+	public Page<Fattura> filtraFatturaPerData(LocalDate data, Pageable pageable) {
+		return fatturaRepository.findByData(data, pageable);
+	}
 }

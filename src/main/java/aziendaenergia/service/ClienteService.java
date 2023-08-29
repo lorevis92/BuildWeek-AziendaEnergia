@@ -77,10 +77,19 @@ public class ClienteService {
 		clienteRepository.delete(found);
 	}
 
-	// FILTRA CLIENTI
-	public Page<Cliente> filtraClienti(Double minFatturatoAnnuale, LocalDate dataInserimento,
-			LocalDate dataUltimoContatto, String parteNome, Pageable pageable) {
-		return clienteRepository.filtraClienti(minFatturatoAnnuale, dataInserimento, dataUltimoContatto, parteNome,
-				pageable);
+	public Page<Cliente> filtraClientiPerFatturato(Double minFatturatoAnnuale, Pageable pageable) {
+		return clienteRepository.findByFatturatoAnnualeGreaterThanEqual(minFatturatoAnnuale, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerDataInserimento(LocalDate dataInserimento, Pageable pageable) {
+		return clienteRepository.findByDataInserimento(dataInserimento, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerDataUltimoContatto(LocalDate dataUltimoContatto, Pageable pageable) {
+		return clienteRepository.findByDataUltimoContatto(dataUltimoContatto, pageable);
+	}
+
+	public Page<Cliente> filtraClientiPerParteNome(String parteNome, Pageable pageable) {
+		return clienteRepository.findByNomeContattoContainingIgnoreCase(parteNome, pageable);
 	}
 }

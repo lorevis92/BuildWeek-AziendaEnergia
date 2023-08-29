@@ -40,6 +40,8 @@ public class Cliente {
 	private Tipo tipo;
 	@OneToMany(mappedBy = "cliente")
 	private List<Indirizzo> listaIndirizzi = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente")
+	private List<Fattura> listafatture = new ArrayList<>();
 
 	public Cliente(String ragioneSociale, String partitaIva, String email, LocalDate dataInserimento,
 			LocalDate dataUltimoContatto, Double fatturatoAnnuale, String pec, int telefono, String emailContatto,

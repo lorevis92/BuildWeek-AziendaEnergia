@@ -16,7 +16,7 @@ public class ImportController {
 
 	@PostMapping("/data")
 	public ResponseEntity<String> importData() {
-		importService.importDataFromCSV();
+		importService.importDataFromCSV("province-italiane.csv");
 		return ResponseEntity.ok("Importazione completata");
 	}
 }

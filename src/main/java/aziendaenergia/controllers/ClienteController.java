@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,12 +64,35 @@ public class ClienteController {
 		clienteService.findByIdAndDelete(id_cliente);
 	}
 
-	@GetMapping("/filtra")
-	public Page<Cliente> filtraClienti(@RequestParam(required = false) Double minFatturatoAnnuale,
-			@RequestParam(required = false) LocalDate dataInserimento,
-			@RequestParam(required = false) LocalDate dataUltimoContatto,
-			@RequestParam(required = false) String parteNome, Pageable pageable) {
-		return clienteService.filtraClienti(minFatturatoAnnuale, dataInserimento, dataUltimoContatto, parteNome,
-				pageable);
+	@GetMapping("/filtra/fatturato")
+	public Page<Cliente> filtraClientiPerFatturato(@RequestParam(required = false) Double minFatturatoAnnuale,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return clienteService.filtraClientiPerFatturato(minFatturatoAnnuale, pageable);
+	}
+
+	@GetMapping("/filtra/data-inserimento")
+	public Page<Cliente> filtraClientiPerDataInserimento(@RequestParam(required = false) LocalDate dataInserimento,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return clienteService.filtraClientiPerDataInserimento(dataInserimento, pageable);
+	}
+
+	@GetMapping("/filtra/data-ultimo-contatto")
+	public Page<Cliente> filtraClientiPerDataUltimoContatto(
+			@RequestParam(required = false) LocalDate dataUltimoContatto, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return clienteService.filtraClientiPerDataUltimoContatto(dataUltimoContatto, pageable);
+	}
+
+	@GetMapping("/filtra/nome")
+	public Page<Cliente> filtraClientiPerParteNome(@RequestParam(required = false) String parteNome,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return clienteService.filtraClientiPerParteNome(parteNome, pageable);
 	}
 }

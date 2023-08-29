@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import aziendaenergia.Enum.Stato;
+import aziendaenergia.entities.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,5 @@ public class NewFatturaPayload {
 	private BigDecimal importo;
 	private int numero;
 	private Stato stato;
+	private Cliente cliente;
 }

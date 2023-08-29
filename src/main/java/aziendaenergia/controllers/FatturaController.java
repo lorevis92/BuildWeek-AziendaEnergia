@@ -1,9 +1,13 @@
 package aziendaenergia.controllers;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,5 +63,21 @@ public class FatturaController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteFattura(@PathVariable UUID fatturaId) {
 		fatturaService.findByIdAndDelete(fatturaId);
+	}
+
+	@GetMapping("/filtra/fatturaCliente")
+	public Page<Fattura> filtraClientiPerFatturato(@RequestParam(required = false) UUID id,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return fatturaService.filtraFatturaPerCliente(id, pageable);
+	}
+
+	@GetMapping("/filtra/data")
+	public Page<Fattura> filtraFatturaPerData(@RequestParam(required = false) LocalDate data,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return fatturaService.filtraFatturaPerData(data, pageable);
 	}
 }
