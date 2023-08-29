@@ -1,5 +1,6 @@
 package aziendaenergia.controllers;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 import aziendaenergia.payload.NewFatturaPayload;
 import aziendaenergia.service.FatturaService;
@@ -66,7 +68,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/fatturaCliente")
-	public Page<Fattura> filtraClientiPerFatturato(@RequestParam(required = false) UUID id,
+	public Page<Fattura> filtraFatturaPerClienti(@RequestParam(required = false) UUID id,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -79,5 +81,27 @@ public class FatturaController {
 			@RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 		return fatturaService.filtraFatturaPerData(data, pageable);
+	}
+
+	@GetMapping("/filtra/anno")
+	public Page<Fattura> filtraFatturePerAnno(@RequestParam int anno, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return fatturaService.filtraFatturaPerAnno(anno, pageable);
+	}
+
+	@GetMapping("/filtra/stato")
+	public Page<Fattura> filtraFatturePerStato(@RequestParam Stato stato, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return fatturaService.filtraFatturaPerStato(stato, pageable);
+	}
+
+	@GetMapping("/filtra/importo")
+	public Page<Fattura> filtraFatturePerImporto(@RequestParam BigDecimal minImporto,
+			@RequestParam BigDecimal maxImporto, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+		return fatturaService.filtraFatturaPerImporto(minImporto, maxImporto, pageable);
 	}
 }

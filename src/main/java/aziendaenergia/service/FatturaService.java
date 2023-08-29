@@ -1,5 +1,6 @@
 package aziendaenergia.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 import aziendaenergia.exceptions.NotFoundException;
 import aziendaenergia.payload.NewFatturaPayload;
@@ -70,5 +72,17 @@ public class FatturaService {
 
 	public Page<Fattura> filtraFatturaPerData(LocalDate data, Pageable pageable) {
 		return fatturaRepository.findByData(data, pageable);
+	}
+
+	public Page<Fattura> filtraFatturaPerStato(Stato stato, Pageable pageable) {
+		return fatturaRepository.findByStato(stato, pageable);
+	}
+
+	public Page<Fattura> filtraFatturaPerAnno(int anno, Pageable pageable) {
+		return fatturaRepository.findByAnno(anno, pageable);
+	}
+
+	public Page<Fattura> filtraFatturaPerImporto(BigDecimal minImporto, BigDecimal maxImporto, Pageable pageable) {
+		return fatturaRepository.findByImportoBetween(minImporto, maxImporto, pageable);
 	}
 }

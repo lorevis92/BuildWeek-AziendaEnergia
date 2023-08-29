@@ -1,5 +1,6 @@
 package aziendaenergia.repositories;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 
 @Repository
@@ -19,4 +21,10 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 
 	@Query("SELECT c FROM Fattura c WHERE DATE(c.data) = DATE(:data)")
 	Page<Fattura> findByData(@Param("data") LocalDate data, Pageable pageable);
+
+	Page<Fattura> findByAnno(int anno, Pageable pageable);
+
+	Page<Fattura> findByStato(Stato stato, Pageable pageable);
+
+	Page<Fattura> findByImportoBetween(BigDecimal minImporto, BigDecimal maxImporto, Pageable pageable);
 }
