@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import aziendaenergia.Enum.Stato;
-import aziendaenergia.interfaces.AllertaFattura;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -27,6 +28,7 @@ public class Fattura {
 	private LocalDate data;
 	private BigDecimal importo;
 	private int numero;
+	@Enumerated(EnumType.STRING)
 	private Stato stato;
 	@ManyToOne
 	private Cliente cliente;
