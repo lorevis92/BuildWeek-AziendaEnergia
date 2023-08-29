@@ -85,4 +85,23 @@ public class FatturaService {
 	public Page<Fattura> filtraFatturaPerImporto(BigDecimal minImporto, BigDecimal maxImporto, Pageable pageable) {
 		return fatturaRepository.findByImportoBetween(minImporto, maxImporto, pageable);
 	}
+
+	
+	 public void checkAndUpdateFatturaStates() {
+	        List<Fattura> emessaFatture = fatturaRepository.findByStatoAndData(Stato.EMESSA, LocalDate.now());
+
+	        for (Fattura fattura : emessaFatture) {
+	            LocalDate currentDate = LocalDate.now();
+	            LocalDate thirtyDaysAfterData = fattura.getData().plusDays(30);
+
+	            if (currentDate.isEqual(fattura.getData())) {
+	                fattura.inviaMessaggio(fattura); //invia il messaggio al cliente
+	            } else if (currentDate.isAfter(thirtyDaysAfterData)) {
+	                fattura.setStato(Stato.INSOLUTA); //cambia lo stato da pagare e poi le faccio inviare il messaggio al cliente
+	                fattura.inviaMessaggio(fattura);
+	            }
+	            fatturaRepository.save(fattura);
+	        }
+	    }
+	
 }

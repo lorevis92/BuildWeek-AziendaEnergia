@@ -2,6 +2,7 @@ package aziendaenergia.repositories;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -27,4 +28,6 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 	Page<Fattura> findByStato(Stato stato, Pageable pageable);
 
 	Page<Fattura> findByImportoBetween(BigDecimal minImporto, BigDecimal maxImporto, Pageable pageable);
+	
+	List<Fattura> findByStatoAndData(Stato stato, LocalDate data);
 }

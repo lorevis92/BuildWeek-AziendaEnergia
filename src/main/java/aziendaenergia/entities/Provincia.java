@@ -31,7 +31,4 @@ public class Provincia {
 
 	@Column(name = "regione")
 	private String regione;
-	
-	@ManyToOne
-	private Comune comune;
 }
