@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import aziendaenergia.Enum.Tipo;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,12 +27,14 @@ public class Cliente {
 	private UUID id;
 	private String ragioneSociale;
 	private String partitaIva;
+	@Column(nullable = false, unique = true)
 	private String email;
 	private LocalDate dataInserimento;
 	private LocalDate dataUltimoContatto;
 	private Double fatturatoAnnuale;
 	private String pec;
 	private int telefono;
+	@Column(nullable = false, unique = true)
 	private String emailContatto;
 	private String nomeContatto;
 	private String cognomeContatto;

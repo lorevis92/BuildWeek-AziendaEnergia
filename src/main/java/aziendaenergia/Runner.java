@@ -13,7 +13,9 @@ import com.github.javafaker.Faker;
 
 import aziendaenergia.Enum.Stato;
 import aziendaenergia.Enum.Tipo;
+import aziendaenergia.entities.Cliente;
 import aziendaenergia.payload.NewClientePayload;
+import aziendaenergia.payload.NewFatturaPayload;
 import aziendaenergia.repositories.UserRepository;
 import aziendaenergia.security.AuthController;
 import aziendaenergia.service.ClienteService;
@@ -61,9 +63,9 @@ public class Runner implements CommandLineRunner {
 					dataUltimoContatto, fatturatoAnnuale, pec, telefono, emailContatto, nomeContatto, cognomeContatto,
 					telefonoContatto, tipo);
 
-//			Cliente cliente = clienteService.save(clientePayload);
+			Cliente cliente = clienteService.save(clientePayload);
 
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 3; j++) {
 				String intestazione = faker.company().name();
 				int anno = faker.number().numberBetween(2000, 2025);
 				LocalDate data = LocalDate.now().minusDays(faker.number().numberBetween(1, 365));
@@ -71,10 +73,10 @@ public class Runner implements CommandLineRunner {
 				int numero = faker.number().numberBetween(1000, 9999);
 				Stato stato = Stato.EMESSA; // O qualsiasi altro valore
 
-//				NewFatturaPayload fatturaPayload = new NewFatturaPayload(intestazione, anno, data, importo, numero,
-//						stato, cliente);
-//
-//				fatturaService.save(fatturaPayload);
+				NewFatturaPayload fatturaPayload = new NewFatturaPayload(intestazione, anno, data, importo, numero,
+						stato, cliente);
+
+				fatturaService.save(fatturaPayload);
 			}
 		}
 	}
