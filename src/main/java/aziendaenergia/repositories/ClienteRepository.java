@@ -27,5 +27,17 @@ public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
 	Page<Cliente> findByDataUltimoContatto(@Param("dataUltimoContatto") LocalDate dataUltimoContatto,
 			Pageable pageable);
 
+	// ORDINAMENTO
 	Page<Cliente> findByNomeContattoContainingIgnoreCase(String parteNome, Pageable pageable);
+
+	Page<Cliente> findAllByOrderByNomeContatto(Pageable pageable);
+
+	Page<Cliente> findAllByOrderByFatturatoAnnuale(Pageable pageable);
+
+	Page<Cliente> findAllByOrderByDataInserimento(Pageable pageable);
+
+	Page<Cliente> findAllByOrderByDataUltimoContatto(Pageable pageable);
+
+//	@Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com WHERE com.provincia = :provincia")
+//	Page<Cliente> findAllByOrderBySedeLegaleProvincia(Pageable pageable);
 }

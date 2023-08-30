@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import aziendaenergia.entities.Cliente;
 import aziendaenergia.payload.NewClientePayload;
+import aziendaenergia.repositories.ClienteRepository;
 import aziendaenergia.service.ClienteService;
 
 @RestController
@@ -30,6 +33,9 @@ import aziendaenergia.service.ClienteService;
 public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
+
+	@Autowired
+	ClienteRepository clienteRepository;
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -64,6 +70,8 @@ public class ClienteController {
 		clienteService.findByIdAndDelete(id_cliente);
 	}
 
+	// METODI FILTRAGGIO
+
 	@GetMapping("/filtra/fatturato")
 	public Page<Cliente> filtraClientiPerFatturato(@RequestParam(required = false) Double minFatturatoAnnuale,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
@@ -94,5 +102,67 @@ public class ClienteController {
 			@RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 		return clienteService.filtraClientiPerParteNome(parteNome, pageable);
+	}
+
+	// METODI ORDINAMENTO
+
+	@GetMapping("/ordina/nome")
+	public Page<Cliente> getAllClientsOrderedByName(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+
+		Pageable pageable = PageRequest.of(page, size);
+		return clienteRepository.findAllByOrderByNomeContatto(pageable);
+	}
+
+	@GetMapping("/ordina/fatturato")
+	public Page<Cliente> getAllClientsOrderedByFatturatoAnnuale(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+
+		Pageable pageable = PageRequest.of(page, size);
+		return clienteRepository.findAllByOrderByFatturatoAnnuale(pageable);
+	}
+
+	@GetMapping("/ordina/dataInserimento")
+	public Page<Cliente> getAllClientsOrderedByDataInserimento(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+
+		Pageable pageable = PageRequest.of(page, size);
+		return clienteRepository.findAllByOrderByDataInserimento(pageable);
+	}
+
+	@GetMapping("/ordina/dataUltimoContatto")
+	public Page<Cliente> getAllClientsOrderedByDataUltimoContatto(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+
+		Pageable pageable = PageRequest.of(page, size);
+		return clienteRepository.findAllByOrderByDataUltimoContatto(pageable);
+	}
+
+	@GetMapping("ordina/sedeLegale-provincia")
+	public ResponseEntity<Page<Cliente>> getClientiBySedeLegale(
+			@PageableDefault(size = 10, sort = "ragioneSociale") Pageable pageable) {
+
+		Page<Cliente> clienti = clienteService.getClientiByProvincia(pageable);
+		return ResponseEntity.ok(clienti);
 	}
 }

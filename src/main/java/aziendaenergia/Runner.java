@@ -14,12 +14,8 @@ import com.github.javafaker.Faker;
 
 import aziendaenergia.Enum.Stato;
 import aziendaenergia.Enum.Tipo;
-import aziendaenergia.entities.Cliente;
 import aziendaenergia.entities.Comune;
-import aziendaenergia.entities.Indirizzo;
 import aziendaenergia.entities.Provincia;
-import aziendaenergia.payload.NewClientePayload;
-import aziendaenergia.payload.NewFatturaPayload;
 import aziendaenergia.repositories.ComuneRepository;
 import aziendaenergia.repositories.ProvinceRepository;
 import aziendaenergia.repositories.UserRepository;
@@ -91,11 +87,11 @@ public class Runner implements CommandLineRunner {
 			String telefonoContatto = faker.phoneNumber().phoneNumber();
 			Tipo tipo = Tipo.SPA;
 
-			NewClientePayload clientePayload = new NewClientePayload(ragioneSociale, partitaIva, email, dataInserimento,
-					dataUltimoContatto, fatturatoAnnuale, pec, telefono, emailContatto, nomeContatto, cognomeContatto,
-					telefonoContatto, tipo, null, null);
-
-			Cliente cliente = clienteService.save(clientePayload);
+//			NewClientePayload clientePayload = new NewClientePayload(ragioneSociale, partitaIva, email, dataInserimento,
+//					dataUltimoContatto, fatturatoAnnuale, pec, telefono, emailContatto, nomeContatto, cognomeContatto,
+//					telefonoContatto, tipo, null, null);
+//
+//			Cliente cliente = clienteService.save(clientePayload);
 
 			// CREAZIONE INDIRIZZO SEDE LEGALE
 			Comune comuneSedeLegale = comuni.get(faker.number().numberBetween(0, comuni.size()));
@@ -103,8 +99,8 @@ public class Runner implements CommandLineRunner {
 			int civicoSedeLegale = faker.number().numberBetween(1, 100);
 			String localitaSedeLegale = comuneSedeLegale.getProvincia();
 			String capSedeLegale = faker.address().zipCode();
-			Indirizzo indirizzoSedeLegale = new Indirizzo(capSedeLegale, civicoSedeLegale, localitaSedeLegale,
-					viaSedeLegale, cliente, comuneSedeLegale);
+//			Indirizzo indirizzoSedeLegale = new Indirizzo(capSedeLegale, civicoSedeLegale, localitaSedeLegale,
+//					viaSedeLegale, cliente, comuneSedeLegale);
 
 			// CREAZIONE INDIRIZZO SEDE OPERATIVA
 			Comune comuneSedeOperativa = comuni.get(faker.number().numberBetween(0, comuni.size()));
@@ -112,13 +108,13 @@ public class Runner implements CommandLineRunner {
 			int civicoSedeOperativa = faker.number().numberBetween(1, 100);
 			String localitaSedeOperativa = comuneSedeOperativa.getProvincia();
 			String capSedeOperativa = faker.address().zipCode();
-			Indirizzo indirizzoSedeOperativa = new Indirizzo(capSedeOperativa, civicoSedeOperativa,
-					localitaSedeOperativa, viaSedeOperativa, cliente, comuneSedeOperativa);
-
-			cliente.setSedeLegale(indirizzoSedeLegale);
-			cliente.setSedeOperativa(indirizzoSedeOperativa);
-
-			clienteService.save(cliente);
+//			Indirizzo indirizzoSedeOperativa = new Indirizzo(capSedeOperativa, civicoSedeOperativa,
+//					localitaSedeOperativa, viaSedeOperativa, cliente, comuneSedeOperativa);
+//
+//			cliente.setSedeLegale(indirizzoSedeLegale);
+//			cliente.setSedeOperativa(indirizzoSedeOperativa);
+//
+//			clienteService.save(cliente);
 
 			// CREAZIONE FATTURE
 			for (int j = 0; j < 3; j++) {
@@ -129,10 +125,10 @@ public class Runner implements CommandLineRunner {
 				int numero = faker.number().numberBetween(1000, 9999);
 				Stato stato = Stato.EMESSA;
 
-				NewFatturaPayload fatturaPayload = new NewFatturaPayload(intestazione, anno, data, importo, numero,
-						stato, cliente);
-
-				fatturaService.save(fatturaPayload);
+//				NewFatturaPayload fatturaPayload = new NewFatturaPayload(intestazione, anno, data, importo, numero,
+//						stato, cliente);
+//
+//				fatturaService.save(fatturaPayload);
 			}
 		}
 	}

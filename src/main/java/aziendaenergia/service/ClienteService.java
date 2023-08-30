@@ -96,4 +96,8 @@ public class ClienteService {
 	public Page<Cliente> filtraClientiPerParteNome(String parteNome, Pageable pageable) {
 		return clienteRepository.findByNomeContattoContainingIgnoreCase(parteNome, pageable);
 	}
+
+//	public Page<Cliente> getClientiByProvincia(Pageable pageable) {
+//		return clienteRepository.findAllByOrderBySedeLegaleProvincia(pageable);
+//	}
 }
