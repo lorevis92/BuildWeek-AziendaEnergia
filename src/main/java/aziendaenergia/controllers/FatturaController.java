@@ -36,13 +36,12 @@ public class FatturaController {
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Fattura saveUser(@RequestBody NewFatturaPayload body) {
+	public Fattura saveFattura(@RequestBody NewFatturaPayload body) {
 		Fattura createdFattura = fatturaService.save(body);
 		return createdFattura;
 	}
 
 	@GetMapping("")
-//	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> getFatture(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return fatturaService.find(page, size, sortBy);

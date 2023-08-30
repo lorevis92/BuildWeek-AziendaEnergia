@@ -30,8 +30,12 @@ public class ClienteService {
 		Cliente newCliente = new Cliente(body.getRagioneSociale(), body.getPartitaIva(), body.getEmail(),
 				body.getDataInserimento(), body.getDataUltimoContatto(), body.getFatturatoAnnuale(), body.getPec(),
 				body.getTelefono(), body.getEmailContatto(), body.getNomeContatto(), body.getCognomeContatto(),
-				body.getTelefonoContatto(), body.getTipo());
+				body.getTelefonoContatto(), body.getTipo(), body.getSedeLegale(), body.getSedeOperativa());
 		return clienteRepository.save(newCliente);
+	}
+
+	public Cliente save(Cliente cliente) {
+		return clienteRepository.save(cliente);
 	}
 
 	// TORNA LA LISTA DEGLI DEI CLIENTI

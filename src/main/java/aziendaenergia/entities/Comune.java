@@ -1,7 +1,5 @@
 package aziendaenergia.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -30,7 +28,7 @@ public class Comune {
 
 	@Column(name = "denominazione_in_italiano")
 	private String denominazione;
-	
+
 	@Column(name = "provincia")
 	private String provincia;
 }

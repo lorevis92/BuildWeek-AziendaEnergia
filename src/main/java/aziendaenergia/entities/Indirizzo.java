@@ -25,7 +25,7 @@ public class Indirizzo {
 	private String località;
 	private String cap;
 	@ManyToOne
-	@JoinColumn(name = "id", referencedColumnName = "id")
+	@JoinColumn(name = "comune_id", referencedColumnName = "id")
 	private Comune comune;
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
