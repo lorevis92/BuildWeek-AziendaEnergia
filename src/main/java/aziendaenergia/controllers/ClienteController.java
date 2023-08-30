@@ -50,7 +50,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{id_cliente}")
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	public Cliente findById(@PathVariable UUID id_cliente) {
 		return clienteService.findById(id_cliente);
 	}
