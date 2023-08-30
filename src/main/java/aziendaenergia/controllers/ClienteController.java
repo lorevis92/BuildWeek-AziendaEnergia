@@ -158,11 +158,11 @@ public class ClienteController {
 		return clienteRepository.findAllByOrderByDataUltimoContatto(pageable);
 	}
 
-	@GetMapping("ordina/sedeLegale-provincia")
-	public ResponseEntity<Page<Cliente>> getClientiBySedeLegale(
-			@PageableDefault(size = 10, sort = "ragioneSociale") Pageable pageable) {
+//	@GetMapping("ordina/sedeLegale-provincia")
+	//public ResponseEntity<Page<Cliente>> getClientiBySedeLegale(
+	//		@PageableDefault(size = 10, sort = "ragioneSociale") Pageable pageable) {
 
-		Page<Cliente> clienti = clienteService.getClientiByProvincia(pageable);
-		return ResponseEntity.ok(clienti);
-	}
+	//	Page<Cliente> clienti = clienteService.getClientiByProvincia(pageable);
+	//	return ResponseEntity.ok(clienti);
+	//}
 }
