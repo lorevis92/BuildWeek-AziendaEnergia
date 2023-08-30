@@ -38,6 +38,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
 
 	Page<Cliente> findAllByOrderByDataUltimoContatto(Pageable pageable);
 
-//	@Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com WHERE com.provincia = :provincia")
-//	Page<Cliente> findAllByOrderBySedeLegaleProvincia(Pageable pageable);
+	@Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com ORDER BY com.provincia ASC")
+	Page<Cliente> findAllByOrderBySedeLegaleProvinciaAsc(Pageable pageable);
 }

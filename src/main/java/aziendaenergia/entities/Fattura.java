@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import aziendaenergia.Enum.Stato;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,7 +31,7 @@ public class Fattura {
 	private int numero;
 	@Enumerated(EnumType.STRING)
 	private Stato stato;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Cliente cliente;
 
 	public Fattura(String intestazione, int anno, LocalDate data, BigDecimal importo, int numero, Stato stato,

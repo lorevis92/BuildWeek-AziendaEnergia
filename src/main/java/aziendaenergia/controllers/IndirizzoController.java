@@ -37,7 +37,7 @@ public class IndirizzoController {
 
 	@GetMapping("")
 //	@PreAuthorize("hasAuthority('ADMIN')")
-	public Page<Indirizzo> getFatture(@RequestParam(defaultValue = "0") int page,
+	public Page<Indirizzo> getIndirizzi(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return indirizzoService.find(page, size, sortBy);
 	}
