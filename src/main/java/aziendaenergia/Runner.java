@@ -55,9 +55,9 @@ public class Runner implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		importService.importDataFromCSV("province-italiane.csv");
-
-		comuniService.importDataFromCSV("comuni-italiani.csv");
+//		importService.importDataFromCSV("province-italiane.csv");
+//
+//		comuniService.importDataFromCSV("comuni-italiani.csv");
 
 		Faker faker = new Faker(new Locale("it"));
 
@@ -94,23 +94,23 @@ public class Runner implements CommandLineRunner {
 //			Cliente cliente = clienteService.save(clientePayload);
 
 			// CREAZIONE INDIRIZZO SEDE LEGALE
-			Comune comuneSedeLegale = comuni.get(faker.number().numberBetween(0, comuni.size()));
-			String viaSedeLegale = faker.address().streetName();
-			int civicoSedeLegale = faker.number().numberBetween(1, 100);
-			String localitaSedeLegale = comuneSedeLegale.getProvincia();
-			String capSedeLegale = faker.address().zipCode();
+//			Comune comuneSedeLegale = comuni.get(faker.number().numberBetween(0, comuni.size()));
+//			String viaSedeLegale = faker.address().streetName();
+//			int civicoSedeLegale = faker.number().numberBetween(1, 100);
+//			String localitaSedeLegale = comuneSedeLegale.getProvincia();
+//			String capSedeLegale = faker.address().zipCode();
 //			Indirizzo indirizzoSedeLegale = new Indirizzo(capSedeLegale, civicoSedeLegale, localitaSedeLegale,
 //					viaSedeLegale, cliente, comuneSedeLegale);
 
 			// CREAZIONE INDIRIZZO SEDE OPERATIVA
-			Comune comuneSedeOperativa = comuni.get(faker.number().numberBetween(0, comuni.size()));
-			String viaSedeOperativa = faker.address().streetName();
-			int civicoSedeOperativa = faker.number().numberBetween(1, 100);
-			String localitaSedeOperativa = comuneSedeOperativa.getProvincia();
-			String capSedeOperativa = faker.address().zipCode();
+//			Comune comuneSedeOperativa = comuni.get(faker.number().numberBetween(0, comuni.size()));
+//			String viaSedeOperativa = faker.address().streetName();
+//			int civicoSedeOperativa = faker.number().numberBetween(1, 100);
+//			String localitaSedeOperativa = comuneSedeOperativa.getProvincia();
+//			String capSedeOperativa = faker.address().zipCode();
 //			Indirizzo indirizzoSedeOperativa = new Indirizzo(capSedeOperativa, civicoSedeOperativa,
 //					localitaSedeOperativa, viaSedeOperativa, cliente, comuneSedeOperativa);
-//
+
 //			cliente.setSedeLegale(indirizzoSedeLegale);
 //			cliente.setSedeOperativa(indirizzoSedeOperativa);
 //
@@ -124,11 +124,12 @@ public class Runner implements CommandLineRunner {
 				BigDecimal importo = new BigDecimal(faker.number().numberBetween(50, 1000));
 				int numero = faker.number().numberBetween(1000, 9999);
 				Stato stato = Stato.EMESSA;
-
+//
 //				NewFatturaPayload fatturaPayload = new NewFatturaPayload(intestazione, anno, data, importo, numero,
 //						stato, cliente);
 //
 //				fatturaService.save(fatturaPayload);
+
 			}
 		}
 	}

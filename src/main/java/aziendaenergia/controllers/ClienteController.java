@@ -8,9 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +50,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{id_cliente}")
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	public Cliente findById(@PathVariable UUID id_cliente) {
 		return clienteService.findById(id_cliente);
 	}
@@ -158,11 +156,11 @@ public class ClienteController {
 		return clienteRepository.findAllByOrderByDataUltimoContatto(pageable);
 	}
 
-	@GetMapping("ordina/sedeLegale-provincia")
-	public ResponseEntity<Page<Cliente>> getClientiBySedeLegale(
-			@PageableDefault(size = 10, sort = "ragioneSociale") Pageable pageable) {
-
-		Page<Cliente> clienti = clienteService.getClientiByProvincia(pageable);
-		return ResponseEntity.ok(clienti);
-	}
+//	@GetMapping("ordina/sedeLegale-provincia")
+//	public ResponseEntity<Page<Cliente>> getClientiBySedeLegale(
+//			@PageableDefault(size = 10, sort = "ragioneSociale") Pageable pageable) {
+//
+//		Page<Cliente> clienti = clienteService.getClientiByProvincia(pageable);
+//		return ResponseEntity.ok(clienti);
+//	}
 }

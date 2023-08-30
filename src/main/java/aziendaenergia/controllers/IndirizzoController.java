@@ -37,24 +37,24 @@ public class IndirizzoController {
 
 	@GetMapping("")
 //	@PreAuthorize("hasAuthority('ADMIN')")
-	public Page<Indirizzo> getFatture(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+	public Page<Indirizzo> getIndirizzi(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "via") String sortBy) {
 		return indirizzoService.find(page, size, sortBy);
 	}
 
-	@GetMapping("/{indirizziId}")
+	@GetMapping("/{indirizzoId}")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public Indirizzo findById(@PathVariable UUID indirizzoId) {
 		return indirizzoService.findById(indirizzoId);
 	}
 
-	@PutMapping("/{indirizziId}")
+	@PutMapping("/{indirizzoId}")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public Indirizzo updateIndirizzo(@PathVariable UUID indirizzoId, @RequestBody NewIndirizzoPayload body) {
 		return indirizzoService.findByIdAndUpdate(indirizzoId, body);
 	}
 
-	@DeleteMapping("/{indirizziId}")
+	@DeleteMapping("/{indirizzoId}")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteIndirizzo(@PathVariable UUID indirizzoId) {
