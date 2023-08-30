@@ -30,10 +30,10 @@ public class ComuniService {
 			CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
 			CSVReader comuneReader = new CSVReaderBuilder(filereader).withCSVParser(parser).build();
 
-			comuneReader.skip(1); // Skip header row
+			comuneReader.skip(1);
 
 			String[] comuniLine;
-			while ((comuniLine =comuneReader.readNext()) != null) {
+			while ((comuniLine = comuneReader.readNext()) != null) {
 				Comune comune = new Comune();
 				comune.setCodice(comuniLine[0]);
 				comune.setProgressivo(comuniLine[1]);

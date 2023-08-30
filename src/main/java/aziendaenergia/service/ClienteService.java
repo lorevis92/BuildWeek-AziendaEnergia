@@ -97,7 +97,4 @@ public class ClienteService {
 		return clienteRepository.findByNomeContattoContainingIgnoreCase(parteNome, pageable);
 	}
 
-//	public Page<Cliente> getClientiByProvincia(Pageable pageable) {
-//		return clienteRepository.findAllByOrderBySedeLegaleProvincia(pageable);
-//	}
 }

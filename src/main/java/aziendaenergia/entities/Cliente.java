@@ -55,7 +55,7 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "sede_operativa_id")
 	private Indirizzo sedeOperativa;
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Fattura> listafatture = new ArrayList<>();
 
 	public Cliente(String ragioneSociale, String partitaIva, String email, LocalDate dataInserimento,

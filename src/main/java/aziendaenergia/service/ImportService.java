@@ -30,7 +30,7 @@ public class ImportService {
 			CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
 			CSVReader provinceReader = new CSVReaderBuilder(filereader).withCSVParser(parser).build();
 
-			provinceReader.skip(1); // Skip header row
+			provinceReader.skip(1);
 
 			String[] provinceLine;
 			while ((provinceLine = provinceReader.readNext()) != null) {
