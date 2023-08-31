@@ -104,6 +104,7 @@ public class Runner implements CommandLineRunner {
 		}
 
 		// CREAZIONE CLIENTE
+		if (!comuni.isEmpty()) {
 		for (int i = 0; i < 10; i++) {
 			String ragioneSociale = faker.company().name();
 			String partitaIva = faker.number().digits(11);
@@ -171,6 +172,7 @@ public class Runner implements CommandLineRunner {
 				fatturaService.save(fatturaPayload);
 
 			}
+		}
 		}
 	}
 }
