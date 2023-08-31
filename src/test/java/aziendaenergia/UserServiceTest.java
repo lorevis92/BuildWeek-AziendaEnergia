@@ -22,12 +22,13 @@ public class UserServiceTest {
 	
 	
 	private User user;
+
 	
 	 @BeforeEach
 	    public void setUp() {
 	        
 		 user = new User("Lukic", "Luca", "Iannice", "luca@gmail.com", "Infedele1980!");
-		 
+		 		 
 	 }
 		 @Test
 		    public void testName() {
@@ -64,10 +65,38 @@ public class UserServiceTest {
 		        user.setUsername("testUser");
 		        user.setPassword(encryptedPassword);
 
-		        // Verifica se la password fornita corrisponde alla password criptata nel database
+		       
 		        //boolean passwordMatches = passwordEncoder.matches(rawPassword, user.getPassword());
 		        assertFalse(passwordEncoder.matches("wrongPassword", user.getPassword()));	
 		        }
+		    
+		    
+		    @Test
+		    public void testCorrectLogin() {
+		        // Simulate retrieving user from the database
+		        User userFromDatabase = new User();
+		        userFromDatabase.setEmail("luca@gmail.com"); // Assuming the username is the email
+		        userFromDatabase.setPassword(passwordEncoder.encode("Infedele1980!"));
+
+		        // Simulate the login process
+		        boolean isAuthenticated = UsersService.authenticateUser(user, userFromDatabase, passwordEncoder);
+
+		        assertTrue(isAuthenticated);
+		    }
+		    
+
+		    @Test
+		    public void testIncorrectLogin() {
+		        // Simulate retrieving user from the database
+		        User userFromDatabase = new User();
+		        userFromDatabase.setEmail("luca@gmail.com"); // Assuming the username is the email
+		        userFromDatabase.setPassword(passwordEncoder.encode("Infedele1980!!"));
+
+		        // Simulate the login process
+		        boolean isAuthenticated = UsersService.authenticateUser(user, userFromDatabase, passwordEncoder);
+
+		        assertFalse(isAuthenticated);
+		    }
 		}
 		 
 		 
