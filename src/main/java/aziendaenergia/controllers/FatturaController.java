@@ -27,6 +27,7 @@ import aziendaenergia.entities.Fattura;
 import aziendaenergia.payload.NewFatturaPayload;
 import aziendaenergia.service.FatturaService;
 
+
 @RestController
 @RequestMapping("/fatture")
 public class FatturaController {

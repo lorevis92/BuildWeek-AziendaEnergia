@@ -26,6 +26,7 @@ import aziendaenergia.payload.NewClientePayload;
 import aziendaenergia.repositories.ClienteRepository;
 import aziendaenergia.service.ClienteService;
 
+
 @RestController
 @RequestMapping("/clienti")
 public class ClienteController {
