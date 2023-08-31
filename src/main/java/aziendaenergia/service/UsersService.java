@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import aziendaenergia.entities.User;
@@ -68,4 +69,20 @@ public class UsersService {
 		return userRepository.findByEmail(email)
 				.orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovato"));
 	}
+	
+	//METODO PER IL TEST LOGIN
+	 public static boolean authenticateUser(User inputUser, User userFromDatabase, BCryptPasswordEncoder passwordEncoder) {
+	        if (inputUser == null || userFromDatabase == null) {
+	            return false;
+	        }
+
+	        if (!inputUser.getEmail().equals(userFromDatabase.getEmail())) {
+	            return false;
+	        }
+
+	        String rawPassword = inputUser.getPassword();
+	        String encryptedPasswordFromDatabase = userFromDatabase.getPassword();
+
+	        return passwordEncoder.matches(rawPassword, encryptedPasswordFromDatabase);
+	    }
 }

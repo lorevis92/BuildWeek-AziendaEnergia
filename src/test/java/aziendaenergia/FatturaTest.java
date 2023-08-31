@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import aziendaenergia.Enum.Stato;
 import aziendaenergia.Enum.Tipo;
@@ -14,6 +15,7 @@ import aziendaenergia.entities.Cliente;
 import aziendaenergia.entities.Fattura;
 import aziendaenergia.entities.Indirizzo;
 
+@SpringBootTest
 public class FatturaTest {
 	
 	 private Cliente cliente;
