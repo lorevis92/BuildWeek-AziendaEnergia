@@ -1,12 +1,7 @@
 package aziendaenergia.entities;
 
-import java.util.UUID;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +16,14 @@ import lombok.Setter;
 public class Provincia {
 
 	@Id
-	@GeneratedValue
-	private UUID id;
-	@Column(name = "sigla")
-	private String sigla;
+	String sigla;
+	String nome;
+	String nome_regione;
 
-	@Column(name = "provincia")
-	private String provincia;
+	public Provincia(String sigla, String nome, String nome_regione) {
+		this.sigla = sigla;
+		this.nome = nome;
+		this.nome_regione = nome_regione;
+	}
 
-	@Column(name = "regione")
-	private String regione;
 }

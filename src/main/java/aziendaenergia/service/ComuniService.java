@@ -1,52 +1,51 @@
 package aziendaenergia.service;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.opencsv.CSVParser;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
-
 import aziendaenergia.entities.Comune;
+import aziendaenergia.exceptions.NotFoundException;
 import aziendaenergia.repositories.ComuneRepository;
 
 @Service
 public class ComuniService {
 
-	private final ComuneRepository comuneRepository;
+	@Autowired
+	ComuneRepository comuneRepository;
 
-	public ComuniService(ComuneRepository comuneRepository) {
-		this.comuneRepository = comuneRepository;
+	public Comune saveComune(Comune comune) {
+		return comuneRepository.save(comune);
 	}
 
-	public void importDataFromCSV(String filePath) {
-		try {
-			FileReader filereader = new FileReader(filePath);
-
-			CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
-			CSVReader comuneReader = new CSVReaderBuilder(filereader).withCSVParser(parser).build();
-
-			comuneReader.skip(1);
-
-			String[] comuniLine;
-			while ((comuniLine = comuneReader.readNext()) != null) {
-				Comune comune = new Comune();
-				comune.setCodice(comuniLine[0]);
-				comune.setProgressivo(comuniLine[1]);
-				comune.setDenominazione(comuniLine[2]);
-				comune.setProvincia(comuniLine[3]);
-				comuneRepository.save(comune);
-			}
-
-			comuneReader.close();
-
-			System.out.println("Importazione dei comuni completati.");
-		} catch (IOException | CsvValidationException e) {
-			e.printStackTrace();
-		}
+	public Page<Comune> findComuniandPage(int page, int size, String sort) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+		return comuneRepository.findAll(pageable);
 	}
+
+	public List<Comune> findComuni() {
+		return comuneRepository.findAll();
+	}
+
+	public Comune findByDenominazione(String denominazione) {
+		return comuneRepository.findByDenominazione(denominazione).orElseThrow(
+				() -> new NotFoundException("Nessun comune corrispondente a: " + denominazione + " è stato trovato."));
+	}
+
+	public Comune findById(UUID id) {
+		return comuneRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Nessun comune con ID: " + id + " è stato trovato."));
+	}
+
+	public void deleteComune(String denominazione) {
+		Comune comune = findByDenominazione(denominazione);
+		comuneRepository.delete(comune);
+	}
+
 }

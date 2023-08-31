@@ -2,10 +2,11 @@ package aziendaenergia.entities;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,15 +21,20 @@ public class Comune {
 	@Id
 	@GeneratedValue
 	private UUID id;
-	@Column(name = "codice_provincia")
-	private String codice;
-
-	@Column(name = "prgressivo_del_comune")
-	private String progressivo;
-
-	@Column(name = "denominazione_in_italiano")
+	private int codice_provincia;
+	private int progressivo_comune;
 	private String denominazione;
+	private String nome_provincia;
 
-	@Column(name = "provincia")
-	private String provincia;
+	@ManyToOne
+	@JoinColumn(name = "provincia_id")
+	private Provincia provincia;
+
+	public Comune(int codice_provincia, int progressivo_comune, String denominazione, String nome_provincia) {
+		this.codice_provincia = codice_provincia;
+		this.progressivo_comune = progressivo_comune;
+		this.denominazione = denominazione;
+		this.nome_provincia = nome_provincia;
+	}
+
 }
