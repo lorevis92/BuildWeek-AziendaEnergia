@@ -1,5 +1,7 @@
 package aziendaenergia.PatternState;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,9 +14,9 @@ public class CronJob {
     @Autowired
     private FatturaService fatturaService;
 
-    @Scheduled(cron = "0 0 0 * * MON-FRI") //Lo faccio partire ogni 24 ore da lunedi a venerdi. 
-    // secondi, minuti, ore, giorni, mesi, giorno della settimana.
+    @Scheduled(cron = "*/10 * * * * *")
     public void checkAndUpdateFatturaStates() {
+        System.out.println("Executing checkAndUpdateFatturaStates at: " + LocalDate.now());
         fatturaService.checkAndUpdateFatturaStates();
     }
 }
