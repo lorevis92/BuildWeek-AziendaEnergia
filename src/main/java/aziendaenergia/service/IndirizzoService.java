@@ -24,7 +24,7 @@ public class IndirizzoService {
 	// SALVA NUOVO INDIRIZZO
 	public Indirizzo save(NewIndirizzoPayload body) {
 
-		Indirizzo newIndirizzo = new Indirizzo(body.getCap(), body.getCivico(), body.getLocalità(), body.getVia(),
+		Indirizzo newIndirizzo = new Indirizzo(body.getCap(), body.getCivico(), body.getLocalita(), body.getVia(),
 				body.getCliente(), body.getComune());
 		return indirizzoRepository.save(newIndirizzo);
 	}
@@ -51,7 +51,7 @@ public class IndirizzoService {
 		Indirizzo found = this.findById(id);
 		found.setCap(body.getCap());
 		found.setCivico(body.getCivico());
-		found.setLocalità(body.getLocalità());
+		found.setLocalita(body.getLocalita());
 		found.setVia(body.getVia());
 		found.setCliente(body.getCliente());
 		found.setComune(body.getComune());

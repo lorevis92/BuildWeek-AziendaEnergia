@@ -1,5 +1,6 @@
 package aziendaenergia.PatternState;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ import aziendaenergia.service.FatturaService;
 @Component
 public class CronJob {
 
-    @Autowired
-    private FatturaService fatturaService;
+	@Autowired
+	private FatturaService fatturaService;
 
-    @Scheduled(cron = "*/10 * * * * *")
-    public void checkAndUpdateFatturaStates() {
-        System.out.println("Executing checkAndUpdateFatturaStates at: " + LocalDate.now());
-        fatturaService.checkAndUpdateFatturaStates();
-    }
+	@Scheduled(cron = "*/10 * * * * *")
+	public void checkAndUpdateFatturaStates() throws IOException {
+		System.out.println("Executing checkAndUpdateFatturaStates at: " + LocalDate.now());
+		fatturaService.checkAndUpdateFatturaStates();
+	}
 }

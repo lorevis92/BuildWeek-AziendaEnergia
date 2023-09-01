@@ -22,7 +22,7 @@ public class Indirizzo {
 	private UUID indirizzo_id;
 	private String via;
 	private int civico;
-	private String località;
+	private String localita;
 	private String cap;
 	@ManyToOne
 	@JoinColumn(name = "comune_id", referencedColumnName = "id")
@@ -35,7 +35,7 @@ public class Indirizzo {
 
 		this.cap = cap;
 		this.civico = civico;
-		this.località = localita;
+		this.localita = localita;
 		this.via = via;
 		this.cliente = cliente;
 		this.comune = comune;

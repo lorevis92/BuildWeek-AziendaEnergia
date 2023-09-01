@@ -1,5 +1,6 @@
 package aziendaenergia.controllers;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -27,7 +28,6 @@ import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
 import aziendaenergia.payload.NewFatturaPayload;
 import aziendaenergia.service.FatturaService;
-
 
 @RestController
 @RequestMapping("/fatture")
@@ -172,29 +172,28 @@ public class FatturaController {
 		}
 		return fatturaService.getFattureOrdinatePerStato(page, size);
 	}
-	
+
 	@PutMapping("/cambiaStatoEmesso/{fatturaId}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    public Fattura statoEmesso(@PathVariable UUID fatturaId) {
-        return fatturaService.tipoEmessa(fatturaId);
-    }
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public Fattura statoEmesso(@PathVariable UUID fatturaId) throws IOException {
+		return fatturaService.tipoEmessa(fatturaId);
+	}
 
-    @PutMapping("/cambiaStatoInsoluto/{fatturaId}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    public Fattura statoInsoluto(@PathVariable UUID fatturaId) {
-        return fatturaService.tipoInsoluta(fatturaId);
-    }
+	@PutMapping("/cambiaStatoInsoluto/{fatturaId}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public Fattura statoInsoluto(@PathVariable UUID fatturaId) throws IOException {
+		return fatturaService.tipoInsoluta(fatturaId);
+	}
 
+	@PutMapping("/cambiaStatoSaldato/{fatturaId}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public Fattura statoSaldato(@PathVariable UUID fatturaId) throws IOException {
+		return fatturaService.tipoSaldata(fatturaId);
+	}
 
-    @PutMapping("/cambiaStatoSaldato/{fatturaId}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    public Fattura statoSaldato(@PathVariable UUID fatturaId) {
-        return fatturaService.tipoSaldata(fatturaId);
-    }
-
-    @PutMapping("/cambiaStatoSospeso/{fatturaId}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    public Fattura statoSospeso(@PathVariable UUID fatturaId) {
-        return fatturaService.tipoSospesa(fatturaId);
-}
+	@PutMapping("/cambiaStatoSospeso/{fatturaId}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public Fattura statoSospeso(@PathVariable UUID fatturaId) throws IOException {
+		return fatturaService.tipoSospesa(fatturaId);
+	}
 }

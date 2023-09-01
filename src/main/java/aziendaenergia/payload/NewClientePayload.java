@@ -44,8 +44,8 @@ public class NewClientePayload {
 	@NotNull(message = "Il tipo è obbligatorio")
 	@Enumerated(EnumType.STRING)
 	private Tipo tipo;
-	@NotNull(message = "L'indirizzo della sede legale è obbligatorio")
+//	@NotNull(message = "L'indirizzo della sede legale è obbligatorio")
 	private Indirizzo sedeLegale;
-	@NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
+//	@NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
 	private Indirizzo sedeOperativa;
 }
