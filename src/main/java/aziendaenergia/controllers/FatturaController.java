@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class FatturaController {
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Fattura saveFattura(@RequestBody NewFatturaPayload body) {
+	public Fattura saveFattura(@RequestBody @Validated NewFatturaPayload body) {
 		Fattura createdFattura = fatturaService.save(body);
 		return createdFattura;
 	}
@@ -49,7 +50,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/{fatturaId}")
-//	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Fattura findById(@PathVariable UUID fatturaId) {
 		return fatturaService.findById(fatturaId);
 	}
@@ -68,6 +69,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/fatturaCliente")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> filtraFatturaPerClienti(@RequestParam(required = false) UUID id,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
@@ -76,6 +78,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/data")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> filtraFatturaByData(@RequestParam(required = false) LocalDate data,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
@@ -84,6 +87,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/anno")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> filtraFatturePerAnno(@RequestParam int anno, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -91,6 +95,7 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/stato")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> filtraFatturePerStato(@RequestParam Stato stato, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -98,10 +103,73 @@ public class FatturaController {
 	}
 
 	@GetMapping("/filtra/importo")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Fattura> filtraFatturePerImporto(@RequestParam BigDecimal minImporto,
 			@RequestParam BigDecimal maxImporto, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 		return fatturaService.filtraFatturaPerImporto(minImporto, maxImporto, pageable);
+	}
+
+	// METODI ORDINAMENTO
+
+	@GetMapping("/ordina/numero")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public Page<Fattura> getAllFattureOrderedByNumero(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+		return fatturaService.getFattureOrdinatePerNumero(page, size);
+	}
+
+	@GetMapping("/ordina/importo")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public Page<Fattura> getAllFattureOrderedByImporto(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+		return fatturaService.getFattureOrdinatePerImporto(page, size);
+	}
+
+	@GetMapping("/ordina/data")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public Page<Fattura> getAllFattureOrderedByData(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+		return fatturaService.getFattureOrdinatePerData(page, size);
+	}
+
+	@GetMapping("/ordina/anno")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public Page<Fattura> getAllFattureOrderedByAnno(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+		return fatturaService.getFattureOrdinatePerAnno(page, size);
+	}
+
+	@GetMapping("/ordina/stato")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public Page<Fattura> getAllFattureOrderedByStato(Integer page, Integer size) {
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 10;
+		}
+		return fatturaService.getFattureOrdinatePerStato(page, size);
 	}
 }

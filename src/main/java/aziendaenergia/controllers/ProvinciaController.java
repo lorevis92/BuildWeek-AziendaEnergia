@@ -19,10 +19,11 @@ public class ProvinciaController {
 	@Autowired
 	ProvinciaService provinciaService;
 
-	@GetMapping
+	@GetMapping("")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Provincia> findProvince(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
-		return provinciaService.findProvinceandPage(page, size, sortBy);
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "sigla") String sortBy) {
+		return provinciaService.find(page, size, sortBy);
 	}
 
 	@GetMapping("/{nome_provincia}")

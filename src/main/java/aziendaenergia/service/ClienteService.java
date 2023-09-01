@@ -81,6 +81,7 @@ public class ClienteService {
 		clienteRepository.delete(found);
 	}
 
+	// FILTRI
 	public Page<Cliente> filtraClientiPerFatturato(Double minFatturatoAnnuale, Pageable pageable) {
 		return clienteRepository.findByFatturatoAnnualeGreaterThanEqual(minFatturatoAnnuale, pageable);
 	}
@@ -95,6 +96,28 @@ public class ClienteService {
 
 	public Page<Cliente> filtraClientiPerParteNome(String parteNome, Pageable pageable) {
 		return clienteRepository.findByNomeContattoContainingIgnoreCase(parteNome, pageable);
+	}
+
+	// ORDINAMENTO
+
+	public Page<Cliente> findAllByOrderByNomeContatto(Pageable pageable) {
+		return clienteRepository.findAllByOrderByNomeContatto(pageable);
+	}
+
+	public Page<Cliente> findAllByOrderByFatturatoAnnuale(Pageable pageable) {
+		return clienteRepository.findAllByOrderByFatturatoAnnuale(pageable);
+	}
+
+	public Page<Cliente> findAllByOrderByDataInserimento(Pageable pageable) {
+		return clienteRepository.findAllByOrderByDataInserimento(pageable);
+	}
+
+	public Page<Cliente> findAllByOrderByDataUltimoContatto(Pageable pageable) {
+		return clienteRepository.findAllByOrderByDataUltimoContatto(pageable);
+	}
+
+	public Page<Cliente> findAllByOrderBySedeLegaleProvinciaAsc(Pageable pageable) {
+		return clienteRepository.findAllByOrderBySedeLegaleProvinciaAsc(pageable);
 	}
 
 }

@@ -23,7 +23,7 @@ public class ProvinciaService {
 		return provinciaRepository.save(provincia);
 	}
 
-	public Page<Provincia> findProvinceandPage(int page, int size, String sort) {
+	public Page<Provincia> find(int page, int size, String sort) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
 		return provinciaRepository.findAll(pageable);
 	}

@@ -20,6 +20,8 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 
 	Page<Fattura> findByClienteId(UUID id, Pageable pageble);
 
+	// FILTRAGGIO
+
 	@Query("SELECT c FROM Fattura c WHERE DATE(c.data) = DATE(:data)")
 	Page<Fattura> findByData(@Param("data") LocalDate data, Pageable pageable);
 
@@ -28,6 +30,19 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 	Page<Fattura> findByStato(Stato stato, Pageable pageable);
 
 	Page<Fattura> findByImportoBetween(BigDecimal minImporto, BigDecimal maxImporto, Pageable pageable);
-	
+
 	List<Fattura> findByStatoAndData(Stato stato, LocalDate data);
+
+	// ORDINAMENTO
+
+	Page<Fattura> findAllByOrderByNumeroAsc(Pageable pageable);
+
+	Page<Fattura> findAllByOrderByImportoAsc(Pageable pageable);
+
+	Page<Fattura> findAllByOrderByDataAsc(Pageable pageable);
+
+	Page<Fattura> findAllByOrderByAnnoAsc(Pageable pageable);
+
+	Page<Fattura> findAllByOrderByStatoAsc(Pageable pageable);
+
 }

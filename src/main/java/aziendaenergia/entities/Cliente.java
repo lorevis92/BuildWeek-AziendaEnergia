@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import aziendaenergia.Enum.Tipo;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,14 +47,14 @@ public class Cliente {
 	private String telefonoContatto;
 	@Enumerated(EnumType.STRING)
 	private Tipo tipo;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "sede_legale_id")
 	private Indirizzo sedeLegale;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "sede_operativa_id")
 	private Indirizzo sedeOperativa;
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente")
 	private List<Fattura> listafatture = new ArrayList<>();
 
 	public Cliente(String ragioneSociale, String partitaIva, String email, LocalDate dataInserimento,
