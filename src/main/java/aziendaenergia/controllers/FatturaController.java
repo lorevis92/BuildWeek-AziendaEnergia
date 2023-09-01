@@ -104,4 +104,29 @@ public class FatturaController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 		return fatturaService.filtraFatturaPerImporto(minImporto, maxImporto, pageable);
 	}
+	
+	@PutMapping("/cambiaStatoEmesso/{fatturaId}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Fattura statoEmesso(@PathVariable UUID fatturaId) {
+        return fatturaService.tipoEmessa(fatturaId);
+    }
+
+    @PutMapping("/cambiaStatoInsoluto/{fatturaId}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Fattura statoInsoluto(@PathVariable UUID fatturaId) {
+        return fatturaService.tipoInsoluta(fatturaId);
+    }
+
+
+    @PutMapping("/cambiaStatoSaldato/{fatturaId}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Fattura statoSaldato(@PathVariable UUID fatturaId) {
+        return fatturaService.tipoSaldata(fatturaId);
+    }
+
+    @PutMapping("/cambiaStatoSospeso/{fatturaId}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Fattura statoSospeso(@PathVariable UUID fatturaId) {
+        return fatturaService.tipoSospesa(fatturaId);
+}
 }

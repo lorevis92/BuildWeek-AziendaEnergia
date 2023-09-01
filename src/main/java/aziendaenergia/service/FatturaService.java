@@ -1,5 +1,6 @@
 package aziendaenergia.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,6 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 
 import aziendaenergia.Enum.Stato;
 import aziendaenergia.entities.Fattura;
@@ -88,7 +97,7 @@ public class FatturaService {
 
 	
 	 public void checkAndUpdateFatturaStates() {
-	        List<Fattura> emessaFatture = fatturaRepository.findByStatoAndData(Stato.EMESSA, LocalDate.now());
+	        List<Fattura> emessaFatture = fatturaRepository.findByStato(Stato.EMESSA);
 
 	        for (Fattura fattura : emessaFatture) {
 	            LocalDate currentDate = LocalDate.now();
@@ -103,5 +112,92 @@ public class FatturaService {
 	            fatturaRepository.save(fattura);
 	        }
 	    }
-	
+	 
+	 public void inviaMessaggio(Fattura fattura) throws IOException {
+         switch (fattura.getStato()) {
+         case EMESSA:
+
+             System.out.println(fattura.getCliente().getNomeContatto() + " " + fattura.getCliente().getCognomeContatto()
+                     + " La fattura " + fattura.getId() + " e' stata emessa " + fattura.getData());
+           //  fattura.invioEmail(fattura);
+
+             break;
+         case SALDATA:
+
+             System.out.println("La fattura " + fattura.getId() + " e' stata saldata");
+          //   fattura.invioEmail(fattura);
+
+             break;
+
+         case SOSPESA:
+             System.out.println("La fattura " + fattura.getId() + " e' stata sospesa");
+         //    fattura.invioEmail(fattura);
+
+             break;
+
+         case INSOLUTA:
+             System.out.println(fattura.getCliente().getNomeContatto() + " " + fattura.getCliente().getCognomeContatto()
+                     + " La fattura " + fattura.getId() + " non e' stata pagata");
+             fattura.invioEmail(fattura);
+
+             break;
+
+         default:
+             System.out.println("Errore nella Fattura " + fattura.getId());
+
+         }
+     }
+
+  public Fattura tipoSospesa(UUID id) {
+      Fattura found = this.findById(id);
+      found.setStato(Stato.SOSPESA);
+         found.inviaMessaggio(found);
+         return fatturaRepository.save(found);
+     }
+
+  public Fattura tipoInsoluta(UUID id) {
+      Fattura found = this.findById(id);
+      found.setStato(Stato.INSOLUTA);
+         found.inviaMessaggio(found);
+         return fatturaRepository.save(found);
+     }
+
+  public Fattura tipoSaldata(UUID id) {
+      Fattura found = this.findById(id);
+      found.setStato(Stato.SALDATA);
+         found.inviaMessaggio(found);
+         return fatturaRepository.save(found);
+     }
+
+  public Fattura tipoEmessa(UUID id) {
+      Fattura found = this.findById(id);
+      found.setStato(Stato.EMESSA);
+         found.inviaMessaggio(found);
+         return fatturaRepository.save(found);
+     }
+  
+//  public void invioEmail(Fattura fattura) throws IOException {
+//	  
+//	    Email from = new Email("lucabjjiannice@gmail.com");
+//	    String subject = "Sending with SendGrid is Fun";
+//	    Email to = new Email("luca.iannice@icloud.com");
+//	    Content content = new Content("text/plain", "La tua fattura " +fattura.getNumero() + " è stata " + fattura.getStato());
+//	    Mail mail = new Mail(from, subject, to, content);
+//
+//	    SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+//	    System.out.println("SENDGRID_API_KEY: " + System.getenv("SENDGRID_API_KEY"));
+//
+//	    Request request = new Request();
+//	    try {
+//	      request.setMethod(Method.POST);
+//	      request.setEndpoint("mail/send");
+//	      request.setBody(mail.build());
+//	      Response response = sg.api(request);
+//	      System.out.println(response.getStatusCode());
+//	      System.out.println(response.getBody());
+//	      System.out.println(response.getHeaders());
+//	    } catch (IOException ex) {
+//	      throw ex;
+//	    }
+//  }
 }
