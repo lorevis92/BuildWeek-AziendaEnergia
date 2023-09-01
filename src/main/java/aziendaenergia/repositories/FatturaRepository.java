@@ -45,4 +45,8 @@ public interface FatturaRepository extends JpaRepository<Fattura, UUID> {
 
 	Page<Fattura> findAllByOrderByStatoAsc(Pageable pageable);
 
+	
+	List<Fattura> findByStato(Stato stato);
+	
+	
 }
