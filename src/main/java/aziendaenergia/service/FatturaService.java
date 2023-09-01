@@ -86,22 +86,52 @@ public class FatturaService {
 		return fatturaRepository.findByImportoBetween(minImporto, maxImporto, pageable);
 	}
 
-	
-	 public void checkAndUpdateFatturaStates() {
-	        List<Fattura> emessaFatture = fatturaRepository.findByStatoAndData(Stato.EMESSA, LocalDate.now());
+	// ORDINA FATTURE PER NUMERO CRESCENTE
+	public Page<Fattura> getFattureOrdinatePerNumero(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("numero"));
+		return fatturaRepository.findAll(pageable);
+	}
 
-	        for (Fattura fattura : emessaFatture) {
-	            LocalDate currentDate = LocalDate.now();
-	            LocalDate thirtyDaysAfterData = fattura.getData().plusDays(30);
+	// ORDINA FATTURA PER IMPORTO DECRESCENTE
+	public Page<Fattura> getFattureOrdinatePerImporto(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("importo").descending());
+		return fatturaRepository.findAll(pageable);
+	}
 
-	            if (currentDate.isEqual(fattura.getData())) {
-	                fattura.inviaMessaggio(fattura); //invia il messaggio al cliente
-	            } else if (currentDate.isAfter(thirtyDaysAfterData)) {
-	                fattura.setStato(Stato.INSOLUTA); //cambia lo stato da pagare e poi le faccio inviare il messaggio al cliente
-	                fattura.inviaMessaggio(fattura);
-	            }
-	            fatturaRepository.save(fattura);
-	        }
-	    }
-	
+	// ORDINA FATTURA PER IMPORTO CRESCENTE
+	public Page<Fattura> getFattureOrdinatePerData(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("data"));
+		return fatturaRepository.findAll(pageable);
+	}
+
+	// ORDINA FATTURA PER ANNO CRESCENTE
+	public Page<Fattura> getFattureOrdinatePerAnno(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("anno"));
+		return fatturaRepository.findAll(pageable);
+	}
+
+	// ORDINA FATTURA PER STATO CRESCENTE
+	public Page<Fattura> getFattureOrdinatePerStato(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("stato"));
+		return fatturaRepository.findAll(pageable);
+	}
+
+	public void checkAndUpdateFatturaStates() {
+		List<Fattura> emessaFatture = fatturaRepository.findByStatoAndData(Stato.EMESSA, LocalDate.now());
+
+		for (Fattura fattura : emessaFatture) {
+			LocalDate currentDate = LocalDate.now();
+			LocalDate thirtyDaysAfterData = fattura.getData().plusDays(30);
+
+			if (currentDate.isEqual(fattura.getData())) {
+				fattura.inviaMessaggio(fattura); // invia il messaggio al cliente
+			} else if (currentDate.isAfter(thirtyDaysAfterData)) {
+				fattura.setStato(Stato.INSOLUTA); // cambia lo stato da pagare e poi le faccio inviare il messaggio al
+													// cliente
+				fattura.inviaMessaggio(fattura);
+			}
+			fatturaRepository.save(fattura);
+		}
+	}
+
 }

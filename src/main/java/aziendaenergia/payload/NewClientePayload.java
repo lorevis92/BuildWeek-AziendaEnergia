@@ -6,6 +6,7 @@ import aziendaenergia.Enum.Tipo;
 import aziendaenergia.entities.Indirizzo;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class NewClientePayload {
 	@NotNull(message = "La partitaIva è obbligatorio")
 	private String partitaIva;
 	@NotNull(message = "L'email è obbligatorio")
+	@Email(message = "La password inserita non è valida")
 	private String email;
 	@NotNull(message = "La dataInserimento è obbligatorio")
 	private LocalDate dataInserimento;
@@ -31,6 +33,7 @@ public class NewClientePayload {
 	@NotNull(message = "Il telefono è obbligatorio")
 	private int telefono;
 	@NotNull(message = "L'emailContatto è obbligatorio")
+	@Email(message = "La password inserita non è valida")
 	private String emailContatto;
 	@NotNull(message = "Il nomeContatto è obbligatorio")
 	private String nomeContatto;

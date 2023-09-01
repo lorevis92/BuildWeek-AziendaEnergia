@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,20 +38,20 @@ public class ClienteController {
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente saveCliente(@RequestBody NewClientePayload body) {
+	public Cliente saveCliente(@RequestBody @Validated NewClientePayload body) {
 		Cliente createdCliente = clienteService.save(body);
 		return createdCliente;
 	}
 
 	@GetMapping("")
-//	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getCliente(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return clienteService.find(page, size, sortBy);
 	}
 
 	@GetMapping("/{id_cliente}")
-//	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Cliente findById(@PathVariable UUID id_cliente) {
 		return clienteService.findById(id_cliente);
 	}
@@ -71,6 +72,7 @@ public class ClienteController {
 	// METODI FILTRAGGIO
 
 	@GetMapping("/filtra/fatturato")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> filtraClientiPerFatturato(@RequestParam(required = false) Double minFatturatoAnnuale,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
@@ -79,6 +81,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/filtra/data-inserimento")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> filtraClientiPerDataInserimento(@RequestParam(required = false) LocalDate dataInserimento,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
@@ -87,6 +90,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/filtra/data-ultimo-contatto")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> filtraClientiPerDataUltimoContatto(
 			@RequestParam(required = false) LocalDate dataUltimoContatto, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
@@ -95,6 +99,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/filtra/nome")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> filtraClientiPerParteNome(@RequestParam(required = false) String parteNome,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy) {
@@ -105,6 +110,7 @@ public class ClienteController {
 	// METODI ORDINAMENTO
 
 	@GetMapping("/ordina/nome")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getAllClientsOrderedByName(Integer page, Integer size) {
 		if (page == null) {
 			page = 0;
@@ -114,10 +120,11 @@ public class ClienteController {
 		}
 
 		Pageable pageable = PageRequest.of(page, size);
-		return clienteRepository.findAllByOrderByNomeContatto(pageable);
+		return clienteService.findAllByOrderByNomeContatto(pageable);
 	}
 
 	@GetMapping("/ordina/fatturato")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getAllClientsOrderedByFatturatoAnnuale(Integer page, Integer size) {
 		if (page == null) {
 			page = 0;
@@ -127,10 +134,11 @@ public class ClienteController {
 		}
 
 		Pageable pageable = PageRequest.of(page, size);
-		return clienteRepository.findAllByOrderByFatturatoAnnuale(pageable);
+		return clienteService.findAllByOrderByFatturatoAnnuale(pageable);
 	}
 
 	@GetMapping("/ordina/dataInserimento")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getAllClientsOrderedByDataInserimento(Integer page, Integer size) {
 		if (page == null) {
 			page = 0;
@@ -140,10 +148,11 @@ public class ClienteController {
 		}
 
 		Pageable pageable = PageRequest.of(page, size);
-		return clienteRepository.findAllByOrderByDataInserimento(pageable);
+		return clienteService.findAllByOrderByDataInserimento(pageable);
 	}
 
 	@GetMapping("/ordina/dataUltimoContatto")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getAllClientsOrderedByDataUltimoContatto(Integer page, Integer size) {
 		if (page == null) {
 			page = 0;
@@ -153,10 +162,11 @@ public class ClienteController {
 		}
 
 		Pageable pageable = PageRequest.of(page, size);
-		return clienteRepository.findAllByOrderByDataUltimoContatto(pageable);
+		return clienteService.findAllByOrderByDataUltimoContatto(pageable);
 	}
 
 	@GetMapping("/ordina/sedeLegale")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Page<Cliente> getClientiBySedeLegaleProvincia(Integer page, Integer size) {
 		if (page == null) {
 			page = 0;
@@ -166,6 +176,6 @@ public class ClienteController {
 		}
 
 		Pageable pageable = PageRequest.of(page, size);
-		return clienteRepository.findAllByOrderBySedeLegaleProvinciaAsc(pageable);
+		return clienteService.findAllByOrderBySedeLegaleProvinciaAsc(pageable);
 	}
 }

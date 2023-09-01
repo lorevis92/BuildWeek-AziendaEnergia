@@ -20,7 +20,7 @@ public class ComuniController {
 	@Autowired
 	ComuniService comuneService;
 
-	@GetMapping
+	@GetMapping("")
 	public Page<Comune> findComuni(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return comuneService.findComuniandPage(page, size, sortBy);
